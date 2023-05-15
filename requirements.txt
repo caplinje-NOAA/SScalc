@@ -1,0 +1,6 @@
+numpy
+dash
+dash-bootstrap-components
+pandas
+plotly
+python-i18n[YAML]
