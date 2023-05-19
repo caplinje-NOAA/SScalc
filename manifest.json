@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "locale": "English_United States.1252",
+  "metadata": {
+    "appmode": "python-dash",
+    "entrypoint": "main"
+  },
+  "python": {
+    "version": "3.8.16",
+    "package_manager": {
+      "name": "pip",
+      "version": "23.0.1",
+      "package_file": "requirements.txt"
+    }
+  },
+  "files": {
+    "requirements.txt": {
+      "checksum": "1ab58f99a524985edbf03f84a59d9510"
+    },
+    ".spyproject\\config\\codestyle.ini": {
+      "checksum": "de8a66cdc6940773667c18ef547a3c09"
+    },
+    ".spyproject\\config\\defaults\\defaults-codestyle-0.2.0.ini": {
+      "checksum": "af6a1f6a1a62a6c37ca62f901d9e89ee"
+    },
+    ".spyproject\\config\\defaults\\defaults-encoding-0.2.0.ini": {
+      "checksum": "650d74483ce6734b72719b7fa4a5d28d"
+    },
+    ".spyproject\\config\\defaults\\defaults-vcs-0.2.0.ini": {
+      "checksum": "b1abf45d196f109529f667dd556bfbe6"
+    },
+    ".spyproject\\config\\defaults\\defaults-workspace-0.2.0.ini": {
+      "checksum": "e9c02b5965a89c2b5dbc2b24a0c42f6d"
+    },
+    ".spyproject\\config\\encoding.ini": {
+      "checksum": "efd70e7a3292196e011a019dfe3edae2"
+    },
+    ".spyproject\\config\\vcs.ini": {
+      "checksum": "99fdb6058c7677bb609aeecabcd8dd0f"
+    },
+    ".spyproject\\config\\workspace.ini": {
+      "checksum": "96af374bfe1f7458d74613e9b41b178f"
+    },
+    "README.md": {
+      "checksum": "a0b4877e985f0e5859447ac2cc5e5a80"
+    },
+    "assets\\style.css": {
+      "checksum": "2671850a4c553a6fa551d74d78ec7d23"
+    },
+    "environment\\README.md": {
+      "checksum": "441ae346d50d8b9056ee8c4dfd5ccc31"
+    },
+    "environment\\conda.yaml": {
+      "checksum": "9bf1cde8a595df3be616a80275f8910e"
+    },
+    "environment\\requirements-dev.txt": {
+      "checksum": "3c0aa920d9e372af480f2e2cb87a593d"
+    },
+    "environment\\requirements.txt": {
+      "checksum": "b41966d32f9d1f50e1d3c2c109ad65f0"
+    },
+    "main.py": {
+      "checksum": "3c6c70a9fde7c2df78b1fa0a6dcc16ae"
+    },
+    "src\\__init__.py": {
+      "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "src\\__pycache__\\__init__.cpython-39.pyc": {
+      "checksum": "63c7b25e37a84d7cafa99c3c7a19595b"
+    },
+    "src\\calculator\\DTHandVibratoryRangesSS.py": {
+      "checksum": "56ef038b486105eedaa95abbc4a1ee60"
+    },
+    "src\\calculator\\DTHranges.py": {
+      "checksum": "839d8452d675648622d55a8e145e4d60"
+    },
+    "src\\calculator\\DTHrangesSS.py": {
+      "checksum": "ce921fdcd0270f9b3289d8932097fc26"
+    },
+    "src\\calculator\\ImpactAndDTHranges.py": {
+      "checksum": "235f8c779c8bc21a8c141573ea0e1425"
+    },
+    "src\\calculator\\SSplotting.py": {
+      "checksum": "b2d2e2c062fb90e7a8579cbca00bd911"
+    },
+    "src\\calculator\\__pycache__\\multiSourceRange.cpython-39.pyc": {
+      "checksum": "cfe4cb863df775b3a878aaffbe687bd9"
+    },
+    "src\\calculator\\data\\MMwfVal\\HF.txt": {
+      "checksum": "09ca87d60bd0fda8e5bbb8a50c6c5926"
+    },
+    "src\\calculator\\data\\MMwfVal\\LF.txt": {
+      "checksum": "2313be4aae777f46ba53fb38ebbdd369"
+    },
+    "src\\calculator\\data\\MMwfVal\\MF.txt": {
+      "checksum": "e038a8def611f2189b5ee1b7dd82e1ea"
+    },
+    "src\\calculator\\data\\MMwfVal\\OW.txt": {
+      "checksum": "f6fef6c704f5fd93afdb8e2b56cf666e"
+    },
+    "src\\calculator\\data\\MMwfVal\\PW.txt": {
+      "checksum": "e570b0d5bc59280b991d3a5d467aeb63"
+    },
+    "src\\calculator\\data\\NMFS_thresholds.py": {
+      "checksum": "730dc4f02c6e31e2f5ee2e0b880bdf47"
+    },
+    "src\\calculator\\data\\__init__.py": {
+      "checksum": "e0c6d3b096bd43b856e060e08f30d216"
+    },
+    "src\\calculator\\data\\__pycache__\\NMFS_thresholds.cpython-38.pyc": {
+      "checksum": "13ef5650e669335582d9ec0a916da6af"
+    },
+    "src\\calculator\\data\\__pycache__\\NMFS_thresholds.cpython-39.pyc": {
+      "checksum": "0ec8ea64bbfdd76a96fa1a1fc620d178"
+    },
+    "src\\calculator\\data\\__pycache__\\__init__.cpython-38.pyc": {
+      "checksum": "5f814df2ba6e33eef107df82d2c18ad0"
+    },
+    "src\\calculator\\data\\__pycache__\\__init__.cpython-39.pyc": {
+      "checksum": "4eca83ec08e3b48ab1eabcdb04f0d3f4"
+    },
+    "src\\calculator\\impactAndVibratoryRangesSS.py": {
+      "checksum": "b83242d8dbeea21cefa91e574e2da84d"
+    },
+    "src\\calculator\\impactRanges.py": {
+      "checksum": "a8220f09de8926dfe4492d5c35cbf623"
+    },
+    "src\\calculator\\impactRangesSS.py": {
+      "checksum": "26df5e462ffdf3fdb81dbfb52edbaabb"
+    },
+    "src\\calculator\\multiSourceRange.py": {
+      "checksum": "251f006742e6b19ff7914225c64af2ee"
+    },
+    "src\\calculator\\src\\MMweighting.py": {
+      "checksum": "a0e1538173f6d0b082089bb8010bd9f0"
+    },
+    "src\\calculator\\src\\__pycache__\\MMweighting.cpython-38.pyc": {
+      "checksum": "97772782617735a2c70b2746fb50d7b5"
+    },
+    "src\\calculator\\src\\__pycache__\\MMweighting.cpython-39.pyc": {
+      "checksum": "a753ba712a81f2856d773f3dbb8a326d"
+    },
+    "src\\calculator\\src\\__pycache__\\userSpreadsheetTools.cpython-38.pyc": {
+      "checksum": "bc47ca17ad0c22fa531231dc251b6a14"
+    },
+    "src\\calculator\\src\\__pycache__\\userSpreadsheetTools.cpython-39.pyc": {
+      "checksum": "fbe7e1a37cad48161eb75a7624329e4f"
+    },
+    "src\\calculator\\src\\userSpreadsheetTools.py": {
+      "checksum": "60c328080320226809340acc9acc149c"
+    },
+    "src\\calculator\\vibratoryRanges.py": {
+      "checksum": "f7b04dce1d8bb906e14599be982e538a"
+    },
+    "src\\calculator\\vibratoryRangesSS.py": {
+      "checksum": "3d7b211ad57547c44cec30bfeca3682d"
+    },
+    "src\\components\\__init__.py": {
+      "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "src\\components\\__pycache__\\__init__.cpython-39.pyc": {
+      "checksum": "60cbf3918f818a2a439e38fa3f3cc580"
+    },
+    "src\\components\\__pycache__\\genInputs.cpython-39.pyc": {
+      "checksum": "c85e35a8d09cb701720f517059bc42bc"
+    },
+    "src\\components\\__pycache__\\ids.cpython-39.pyc": {
+      "checksum": "6d8ead6190a150e5008b788aa089458c"
+    },
+    "src\\components\\__pycache__\\inputs.cpython-39.pyc": {
+      "checksum": "c9cb5fd47d5254bd9db3f3f1367993ba"
+    },
+    "src\\components\\__pycache__\\layout.cpython-39.pyc": {
+      "checksum": "4a5c542d5b48c93480c53dc59fb460df"
+    },
+    "src\\components\\__pycache__\\results.cpython-39.pyc": {
+      "checksum": "a54f32909a913d6a746d50e2b2c78157"
+    },
+    "src\\components\\__pycache__\\sourceCanvas.cpython-39.pyc": {
+      "checksum": "1581dfeb3e7793ea853bf7699ce9ce7f"
+    },
+    "src\\components\\__pycache__\\sourceConfigInput.cpython-39.pyc": {
+      "checksum": "163b62555863f7fe98d26a445f4aecfe"
+    },
+    "src\\components\\__pycache__\\text.cpython-39.pyc": {
+      "checksum": "29b65168d72fdf9c7a79fffd519435d5"
+    },
+    "src\\components\\custom\\__pycache__\\inputGroups.cpython-39.pyc": {
+      "checksum": "f67f872940aad396aab1d445d2b829de"
+    },
+    "src\\components\\custom\\__pycache__\\textScripting.cpython-39.pyc": {
+      "checksum": "c4d33c1cae329dd66e40b88f0dbaebf8"
+    },
+    "src\\components\\custom\\inputGroups.py": {
+      "checksum": "4839c44cfcab93ea3ce1f53fa8444f9d"
+    },
+    "src\\components\\custom\\textScripting.py": {
+      "checksum": "997a67a4e8ed000ed2eb28b91b28bfb7"
+    },
+    "src\\components\\genInputs.py": {
+      "checksum": "8ae2841ab6d293923c1c64370165b528"
+    },
+    "src\\components\\ids.py": {
+      "checksum": "a647e094c12a26bc19f5b892391b6b32"
+    },
+    "src\\components\\inputs.py": {
+      "checksum": "67c65771c44046cd86a359cb642532ac"
+    },
+    "src\\components\\layout.py": {
+      "checksum": "960080554e267056d03a1f2eba4a4f7e"
+    },
+    "src\\components\\results.py": {
+      "checksum": "9ceb610a1f2521892bea9351657f46ef"
+    },
+    "src\\components\\sourceCanvas.py": {
+      "checksum": "a7db644ddb337a65057e4702450059c6"
+    },
+    "src\\components\\sourceConfigInput.py": {
+      "checksum": "8c392d6a8fefa8fc398b50d88bff672f"
+    },
+    "src\\components\\text.py": {
+      "checksum": "a75417cd4f57e21edc1f6be7510aed69"
+    }
+  }
+}

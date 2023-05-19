@@ -31,28 +31,28 @@ def render(app: Dash) -> html.Div:
             n=Input(ids.CALCULATE_BUTTON, "n_clicks"),
   
             impact = [
-                State({"type": ids.IMPACT_INPUT_SEL, "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_PEAK, "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_RMS, "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_RANGE, "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_NPILES, "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_NSTRIKES, "index": ALL}, "value")
+                State({"type": ids.IMPACT_INPUT_SEL['id'], "index": ALL}, "value"),
+                State({"type": ids.IMPACT_INPUT_PEAK['id'], "index": ALL}, "value"),
+                State({"type": ids.IMPACT_INPUT_RMS['id'], "index": ALL}, "value"),
+                State({"type": ids.IMPACT_INPUT_RANGE['id'], "index": ALL}, "value"),
+                State({"type": ids.IMPACT_INPUT_NPILES['id'], "index": ALL}, "value"),
+                State({"type": ids.IMPACT_INPUT_NSTRIKES['id'], "index": ALL}, "value")
             ],
             DTH = [
-                State({"type": ids.DTH_INPUT_SEL, "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_PEAK, "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_RMS, "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_RANGE, "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_NPILES, "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_RATE, "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_TIME, "index": ALL}, "value")
+                State({"type": ids.DTH_INPUT_SEL['id'], "index": ALL}, "value"),
+                State({"type": ids.DTH_INPUT_PEAK['id'], "index": ALL}, "value"),
+                State({"type": ids.DTH_INPUT_RMS['id'], "index": ALL}, "value"),
+                State({"type": ids.DTH_INPUT_RANGE['id'], "index": ALL}, "value"),
+                State({"type": ids.DTH_INPUT_NPILES['id'], "index": ALL}, "value"),
+                State({"type": ids.DTH_INPUT_RATE['id'], "index": ALL}, "value"),
+                State({"type": ids.DTH_INPUT_TIME['id'], "index": ALL}, "value")
             ],
 
             vibratory= [
-                State({"type": ids.VIBRATORY_INPUT_RMS, "index": ALL}, "value"),
-                State({"type": ids.VIBRATORY_INPUT_RANGE, "index": ALL}, "value"),
-                State({"type": ids.VIBRATORY_INPUT_NPILES, "index": ALL}, "value"),
-                State({"type": ids.VIBRATORY_INPUT_TIME, "index": ALL}, "value")
+                State({"type": ids.VIBRATORY_INPUT_RMS['id'], "index": ALL}, "value"),
+                State({"type": ids.VIBRATORY_INPUT_RANGE['id'], "index": ALL}, "value"),
+                State({"type": ids.VIBRATORY_INPUT_NPILES['id'], "index": ALL}, "value"),
+                State({"type": ids.VIBRATORY_INPUT_TIME['id'], "index": ALL}, "value")
                 ],
             WF = State(ids.WF_INPUT, "value"),
             F  = State(ids.F_INPUT, "value")

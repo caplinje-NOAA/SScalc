@@ -5,12 +5,12 @@ Created on Thu Mar  2 14:18:37 2023
 @author: james.caplinger
 """
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
+# import matplotlib.pyplot as plt
+# import matplotlib
 from dataclasses import dataclass
 #from basicTools import genericCSVhandler as gCSV
-matplotlib.rcParams['mathtext.fontset'] = 'stix'
-matplotlib.rcParams['font.family'] = 'STIXGeneral'
+# matplotlib.rcParams['mathtext.fontset'] = 'stix'
+# matplotlib.rcParams['font.family'] = 'STIXGeneral'
 
 
 #####| LF | MF  |  HF |  PW |  OW |# Hearing Groups

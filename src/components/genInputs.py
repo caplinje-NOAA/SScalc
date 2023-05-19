@@ -11,42 +11,14 @@ from dash.dependencies import Input, Output
 
 
 from . import ids, sourceConfigInput
+from .custom import inputGroups as ig
 
 
 
-
+wf_dict = {'name':"Weighting Frequency",'id':ids.WF_INPUT,'unit':'KHz','value':2.0}
+TL_dict = {'name':"TL coef.",'id':ids.F_INPUT,'unit':'dB','value':15.0}
 
 def render(app: Dash) -> html.Div:
    
 
-    return html.Div(
-        className="app-div",
-        children=[
-            html.H4(f'General Inputs'),
-            html.Hr(),
-            html.Div(
-            [
-                dbc.InputGroup(
-                    [
-                        dbc.InputGroupText("Weighting Frequency"),
-                        dbc.Input(value="2.0", type="number",id=ids.WF_INPUT),
-                        dbc.InputGroupText("KHz"),
-                    ],
-                    className="mb-3",
-                ),
-                dbc.InputGroup(
-                    [
-                        dbc.InputGroupText("TL"),
-                        dbc.Input(value="15", type="number",id=ids.F_INPUT),
-                        dbc.InputGroupText("dB"),
-                    ],
-                    className="mb-3",
-                    )
-               
-            ]
-        )
-
-            
-
-        ],
-    )
+    return ig.inputGroupList('General Inputs', [wf_dict,TL_dict])
