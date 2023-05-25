@@ -9,7 +9,7 @@ Created on Sat May 13 12:48:31 2023
 from dash import Dash, dcc, html,State, ALL
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
-
+import traceback
 
 
 
@@ -80,7 +80,16 @@ def render(app: Dash) -> html.Div:
             return [html.Div()]
         else:
             print('button clicked')
-            return [html.Div(processInputs(impact, DTH, vibratory,F))]
+            try:
+                inDiv = processInputs(impact, DTH, vibratory,F)
+                
+            except:
+                inDiv = html.Div('error processing inputs')
+                print(traceback.format_exc())
+            finally:
+                return [html.Div(inDiv)]
+                
+            #return [html.Div(inDiv)]
 
     return html.Div(
         [

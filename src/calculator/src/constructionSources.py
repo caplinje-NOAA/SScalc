@@ -129,6 +129,8 @@ class combinedSource:
     isImpulsive:bool 
     sourcesDF:pd.DataFrame
     hg:[str]
+    
+    
 def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
     """A function which combines impact, vibratory, and DTH sources using input dictionaries
     having the appropriate keys (e.g. 'index', 'SEL', 'PEAK', 'RMS', 'RANGE', 'NPILES', 'NSTRIKES', 'TIME', 'RATE')
@@ -140,7 +142,7 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
     
     # unpack impact sources and build instances
     for i in range(len(impact['SEL'])):
-        
+        print('enter impact loop')
         sources.append(impactSource(
                                     index=i+1,
                                     SELss=impact['SEL'][i],
@@ -155,6 +157,7 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
                        )
     # unpack DTH sources and build instances
     for i in range(len(DTH['SEL'])):
+        print('enter dthloop')
         sources.append(DTHSource(   
                                     index=i+1,
                                     SELss=DTH['SEL'][i],
@@ -170,6 +173,7 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
                        )  
     # unpack vibratory sources and build instances
     for i in range(len(vibratory['RMS'])):
+        print('enter vibratory loop')
         sources.append(vibratorySource(
                                     index=i+1,
                                     Lrms=vibratory['RMS'][i],
@@ -183,41 +187,45 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
         
         # Add sources and properties of super-source appropriately 
         
-        # matrix of weighted levels
-        LEw_all = np.array([source.LEw for source in sources])
-        # overall impulsive nature, if any is impulsive assume impulsive
-        isImpulsive = any([source.isImpulsive for source in sources])
-        # get peak levels, excluding vibratory
-        Lpeak_allvib = np.array([source.Lpeak if source.isImpulsive else None for source in sources])
-        Lpeak_all = Lpeak_allvib[Lpeak_allvib!=None]
-        # get all RMS levels
-        Lrms_all = np.array([source.Lrms for source in sources])
-        # get ranges
-        ranges_all = np.array([source.measuredRange_m for source in sources])
-        uniqueRanges = np.unique(ranges_all)
-        if len(uniqueRanges)>1:
-            raise ValueError('non uniform measurement ranges not yet implemented!')
-        else:
-            measurementRange = np.unique(ranges_all)[0]
-        LEw = np.zeros(len(WA.hg),)
-        # add SEL levels in each hearing group
-        for i,LEhg in enumerate(LEw_all.T):
-            LEw[i] =addSources(LEhg)
-            
-        Lrms = addSources(Lrms_all)
-        Lpeak = np.max(Lpeak_all)
+    print('exiting source loops')
+    print(f'sources={sources}')
+    # matrix of weighted levels
+    LEw_all = np.array([source.LEw for source in sources])
+    # overall impulsive nature, if any is impulsive assume impulsive
+    isImpulsive = any([source.isImpulsive for source in sources])
+
+       
+    # get peak levels, excluding vibratory
+    Lpeak_allvib = np.array([source.Lpeak if source.isImpulsive else None for source in sources])
+    Lpeak_all = Lpeak_allvib[Lpeak_allvib!=None]
+    # get all RMS levels
+    Lrms_all = np.array([source.Lrms for source in sources])
+    # get ranges
+    ranges_all = np.array([source.measuredRange_m for source in sources])
+    uniqueRanges = np.unique(ranges_all)
+    if len(uniqueRanges)>1:
+        raise ValueError('non uniform measurement ranges not yet implemented!')
+    else:
+        measurementRange = np.unique(ranges_all)[0]
+    LEw = np.zeros(len(WA.hg),)
+    # add SEL levels in each hearing group
+    for i,LEhg in enumerate(LEw_all.T):
+        LEw[i] =addSources(LEhg)
         
-        ## build dataframe
-        indexArray =[f'{source.index}: {source.sourceType.name}' for source in sources]
-        columnsArray = [f'SELc-{hg}' for hg in WA.hg]
-        df = pd.DataFrame(data = np.round(LEw_all,decimals=2), columns=columnsArray ,index=indexArray)
-        df.loc[len(df.index)]=np.round(LEw,decimals=2)
-        df.rename(index={len(df.index)-1:'combined'},inplace=True)
-        df['Peak']=roundf(np.append(Lpeak_allvib,Lpeak))
-        df['RMS'] = np.round(np.append(Lrms_all,Lrms),decimals=2)
-        df.index.set_names('Sources',inplace=True)
-        print(sources)
-        return combinedSource(LE=LEw,Lpeak=Lpeak,Lrms=Lrms,measurementRange=measurementRange,isImpulsive=isImpulsive,sourcesDF=df,hg=WA.hg)
+    Lrms = addSources(Lrms_all)
+    Lpeak = np.max(Lpeak_all)
+    
+    ## build dataframe
+    indexArray =[f'{source.index}: {source.sourceType.name}' for source in sources]
+    columnsArray = [f'SELc-{hg}' for hg in WA.hg]
+    df = pd.DataFrame(data = np.round(LEw_all,decimals=2), columns=columnsArray ,index=indexArray)
+    df.loc[len(df.index)]=np.round(LEw,decimals=2)
+    df.rename(index={len(df.index)-1:'combined'},inplace=True)
+    df['Peak']=roundf(np.append(Lpeak_allvib,Lpeak))
+    df['RMS'] = np.round(np.append(Lrms_all,Lrms),decimals=2)
+    df.index.set_names('Sources',inplace=True)
+    print(sources)
+    return combinedSource(LE=LEw,Lpeak=Lpeak,Lrms=Lrms,measurementRange=measurementRange,isImpulsive=isImpulsive,sourcesDF=df,hg=WA.hg)
                          
         
             
