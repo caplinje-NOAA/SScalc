@@ -30,7 +30,7 @@ def create_layout(app: Dash) -> html.Div:
                                        html.Div('(2) Add data for each source, in each tab'),
                                        html.Div('(3) click calculate to view results')],header='INSTRUCTIONS')),
             dbc.Col(sourceCanvas.render(app)),
-            dbc.Col(genInputs.render(app))
+           # dbc.Col(genInputs.render(app))
             
             ]),
             inputs.render(app),

@@ -8,10 +8,10 @@ from src.components.layout import create_layout
 #data = load_transaction_data(DATA_PATH)
 
 app = Dash(external_stylesheets=[BOOTSTRAP],prevent_initial_callbacks=True)
-app.title = "Simultaneous Source Demo"
+app.title = "Accumulation Tool (Demo)"
 app.layout = create_layout(app)
 
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

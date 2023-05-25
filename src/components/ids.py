@@ -29,10 +29,12 @@ NSTRIKES = 'NSTRIKES'
 WF = 'WF'
 RATE = 'RATE'
 TIME = 'TIME'
+F='TL-coef'
 
 
-WF_INPUT = {'parameter':WF, 'name':'Weighting Frequency', 'unit':'Hz'}
-F_INPUT = {'parameter':'F', 'name':'Transmission Loss Coef.', 'unit':'dB','value':15.}
+WF_INPUT =          {'parameter':WF, 'name':'Weighting Frequency', 'unit':'KHz'}
+F_INPUT_BYSOURCE =  {'parameter':F, 'name':'Transmission Loss Coef.', 'unit':'dB','value':15.}
+F_INPUT = 'general-F-Input'
 
 # input ids, names, and units for big column inputs
 # grouped as dictionaries with associated text to avoid inconsistencies between ids and text
@@ -43,10 +45,11 @@ IMPACT_INPUT_RANGE =     {'sourceType':IMPACT,    'parameter':RANGE,   'name':"R
 IMPACT_INPUT_NPILES =    {'sourceType':IMPACT,    'parameter':NPILES,  'name':"Number of Piles",       'unit':"#"}
 IMPACT_INPUT_NSTRIKES =  {'sourceType':IMPACT,    'parameter':NSTRIKES,'name':"Strikes per pile",      'unit':"#"}
 IMPACT_INPUT_WF =        {'sourceType':IMPACT,    'parameter':WF,      'name':"Weighting Frequency",   'unit':'KHz',      'value':2.0}
+#IMPACT_INPUT_WF =        {'sourceType':IMPACT,    'parameter':WF,      'name':"Weighting Frequency",   'unit':'KHz',      'value':2.0}
 
 impactInputDict = [IMPACT_INPUT_SEL,
-                   IMPACT_INPUT_PEAK,
-                   IMPACT_INPUT_RMS,
+ #                  IMPACT_INPUT_PEAK,
+#                   IMPACT_INPUT_RMS,
                    IMPACT_INPUT_RANGE,
                    IMPACT_INPUT_NPILES,
                    IMPACT_INPUT_NSTRIKES]
@@ -59,10 +62,11 @@ DTH_INPUT_NPILES =  {'sourceType':DTH,    'parameter':NPILES,  'name':"Number of
 DTH_INPUT_RATE =    {'sourceType':DTH,    'parameter':RATE,    'name':"Strike Rate",               'unit':"Per Second"}
 DTH_INPUT_TIME =    {'sourceType':DTH,    'parameter':TIME,    'name':"Time Per Pile",             'unit':"Min."}
 DTH_INPUT_WF =      {'sourceType':DTH,    'parameter':WF,      'name':"Weighting Frequency",       'unit':'KHz',       'value':2.0}
+#DTH_INPUT_WF =      {'sourceType':DTH,    'parameter':WF,      'name':"Weighting Frequency",       'unit':'KHz',       'value':2.0}
 
 DTH_InputDict =   [DTH_INPUT_SEL,
-                   DTH_INPUT_PEAK,
-                   DTH_INPUT_RMS,
+ #                  DTH_INPUT_PEAK,
+ #                  DTH_INPUT_RMS,
                    DTH_INPUT_RANGE,
                    DTH_INPUT_NPILES,
                    DTH_INPUT_TIME,
@@ -73,6 +77,7 @@ VIBRATORY_INPUT_RANGE = {'sourceType':VIBRATORY,    'parameter':RANGE,   'name':
 VIBRATORY_INPUT_NPILES ={'sourceType':VIBRATORY,    'parameter':NPILES,  'name':"Number of Piles",           'unit':"#"}
 VIBRATORY_INPUT_TIME =  {'sourceType':VIBRATORY,    'parameter':TIME,    'name':"Time Per Pile",             'unit':"Min."}
 VIBRATORY_INPUT_WF =    {'sourceType':VIBRATORY,    'parameter':WF,      'name':"Weighting Frequency",       'unit':'KHz',       'value':2.0}
+#VIBRATORY_INPUT_WF =    {'sourceType':VIBRATORY,    'parameter':WF,      'name':"Weighting Frequency",       'unit':'KHz',       'value':2.0}
 
 vibratoryInputDict = [VIBRATORY_INPUT_RMS,
                       VIBRATORY_INPUT_RANGE,

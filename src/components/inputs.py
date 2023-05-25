@@ -28,7 +28,7 @@ def titleDiv(title,i):
 def tabContent(index:int,Type:str):
     title = f'User Inputs for Source {index}: {Type}'
     wfDict= ids.WF_INPUT
-    FDict = ids.F_INPUT
+    FDict = ids.F_INPUT_BYSOURCE
     
     if Type=='Impact':
         mainInputs = ig.inputGroupList(title,ids.impactInputDict,index=index)
@@ -46,7 +46,7 @@ def tabContent(index:int,Type:str):
         wfDict['value'] = 2.5
         FDict['sourceType']=ids.VIBRATORY
     
-    defaultDict=[wfDict]
+    defaultDict=[wfDict,FDict]
     defaultInputs = ig.inputGroupList('Recommended Defaults', defaultDict,index=index)
     return html.Div(
                 dbc.Row(
@@ -64,7 +64,7 @@ def buildInputDiv(types)->html.Div:
     for i,t in enumerate(types):
    
         contents = tabContent(i,t)
-        tabs.append(dbc.Tab(contents,label=f'Source {i}: {t}'))
+        tabs.append(dbc.Tab(contents,label=f'Source {i+1}: {t}'))
     return html.Div(dbc.Tabs(tabs))
 
 

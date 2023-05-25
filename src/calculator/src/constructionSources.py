@@ -53,6 +53,7 @@ class constructionSource:
     SELss:float = None
     Lpeak:float = None
     Lrms:float = None
+    TL:float=None
     measuredRange_m:float = None
     numberOfPiles:int  = None
     strikesPerPile:int = None
@@ -125,13 +126,14 @@ class combinedSource:
     LE:np.ndarray
     Lpeak:float
     Lrms:float
+    TL:float
     measurementRange:float
     isImpulsive:bool 
     sourcesDF:pd.DataFrame
     hg:[str]
     
     
-def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
+def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Behavioral=False)->combinedSource:
     """A function which combines impact, vibratory, and DTH sources using input dictionaries
     having the appropriate keys (e.g. 'index', 'SEL', 'PEAK', 'RMS', 'RANGE', 'NPILES', 'NSTRIKES', 'TIME', 'RATE')
     and appropriate values.  Returns a combinedSource data class containing super-source levels, measurement range, 
@@ -146,8 +148,9 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
         sources.append(impactSource(
                                     index=i+1,
                                     SELss=impact['SEL'][i],
-                                    Lpeak=impact['PEAK'][i],
-                                    Lrms=impact['RMS'][i],
+  #                                  Lpeak=impact['PEAK'][i],
+  #                                  Lrms=impact['RMS'][i],
+                                    TL=impact['F'][i],
                                     measuredRange_m=impact['RANGE'][i],
                                     numberOfPiles=impact['NPILES'][i],
                                     strikesPerPile=impact['NSTRIKES'][i],
@@ -161,8 +164,9 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
         sources.append(DTHSource(   
                                     index=i+1,
                                     SELss=DTH['SEL'][i],
-                                    Lpeak=DTH['PEAK'][i],
-                                    Lrms=DTH['RMS'][i],
+     #                               Lpeak=DTH['PEAK'][i],
+      #                              Lrms=DTH['RMS'][i],
+                                    TL=DTH['F'][i],
                                     measuredRange_m=DTH['RANGE'][i],
                                     numberOfPiles=DTH['NPILES'][i],
                                     timePerPile_min=DTH['TIME'][i],
@@ -177,6 +181,7 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
         sources.append(vibratorySource(
                                     index=i+1,
                                     Lrms=vibratory['RMS'][i],
+                                    TL=vibratory['F'][i],
                                     measuredRange_m=vibratory['RANGE'][i],
                                     numberOfPiles=vibratory['NPILES'][i],
                                     timePerPile_min=vibratory['TIME'][i],
@@ -191,15 +196,25 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
     print(f'sources={sources}')
     # matrix of weighted levels
     LEw_all = np.array([source.LEw for source in sources])
+    TL_all = np.array([source.TL for source in sources])
+    TL = np.max(TL_all)
     # overall impulsive nature, if any is impulsive assume impulsive
     isImpulsive = any([source.isImpulsive for source in sources])
 
-       
+    if Peak:   
     # get peak levels, excluding vibratory
-    Lpeak_allvib = np.array([source.Lpeak if source.isImpulsive else None for source in sources])
-    Lpeak_all = Lpeak_allvib[Lpeak_allvib!=None]
-    # get all RMS levels
-    Lrms_all = np.array([source.Lrms for source in sources])
+        Lpeak_allvib = np.array([source.Lpeak if source.isImpulsive else None for source in sources])
+        Lpeak_all = Lpeak_allvib[Lpeak_allvib!=None]
+        Lpeak = np.max(Lpeak_all)
+    else:
+        Lpeak=None
+        
+    if Behavioral:  
+        # get all RMS levels
+        Lrms_all = np.array([source.Lrms for source in sources])
+        Lrms = addSources(Lrms_all)
+    else:
+        Lrms = None
     # get ranges
     ranges_all = np.array([source.measuredRange_m for source in sources])
     uniqueRanges = np.unique(ranges_all)
@@ -211,9 +226,9 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
     # add SEL levels in each hearing group
     for i,LEhg in enumerate(LEw_all.T):
         LEw[i] =addSources(LEhg)
+    
         
-    Lrms = addSources(Lrms_all)
-    Lpeak = np.max(Lpeak_all)
+
     
     ## build dataframe
     indexArray =[f'{source.index}: {source.sourceType.name}' for source in sources]
@@ -221,11 +236,13 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict])->combinedSource:
     df = pd.DataFrame(data = np.round(LEw_all,decimals=2), columns=columnsArray ,index=indexArray)
     df.loc[len(df.index)]=np.round(LEw,decimals=2)
     df.rename(index={len(df.index)-1:'combined'},inplace=True)
-    df['Peak']=roundf(np.append(Lpeak_allvib,Lpeak))
-    df['RMS'] = np.round(np.append(Lrms_all,Lrms),decimals=2)
+    if Peak:
+        df['Peak']=roundf(np.append(Lpeak_allvib,Lpeak))
+    if Behavioral:
+        df['RMS'] = np.round(np.append(Lrms_all,Lrms),decimals=2)
     df.index.set_names('Sources',inplace=True)
     print(sources)
-    return combinedSource(LE=LEw,Lpeak=Lpeak,Lrms=Lrms,measurementRange=measurementRange,isImpulsive=isImpulsive,sourcesDF=df,hg=WA.hg)
+    return combinedSource(LE=LEw,Lpeak=Lpeak,Lrms=Lrms,measurementRange=measurementRange,isImpulsive=isImpulsive,sourcesDF=df,hg=WA.hg,TL=TL)
                          
         
             

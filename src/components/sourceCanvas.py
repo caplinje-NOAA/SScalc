@@ -18,7 +18,7 @@ card = dbc.Card(
             ]
         ),
     ],
-    style={"width": "18rem"},
+    style={"width": "100%"},
 )
 
 

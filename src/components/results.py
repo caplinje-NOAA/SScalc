@@ -26,9 +26,9 @@ def resTables(res:multiSourceRange.results):
 
 
 
-def processInputs(impact,DTH,vibratory,F):
+def processInputs(impact,DTH,vibratory):
     # test for empty array
-    res = multiSourceRange.calcRanges_MS(impact,DTH,vibratory,F)
+    res = multiSourceRange.calcRanges_MS(impact,DTH,vibratory)
     
     return resTables(res)
     
@@ -44,22 +44,24 @@ def render(app: Dash) -> html.Div:
   
             impact = dict(
                 SEL =       State({'sourceType':ids.IMPACT, 'parameter':ids.SEL, "index": ALL}, "value"),
-                PEAK =      State({'sourceType':ids.IMPACT, 'parameter':ids.PEAK, "index": ALL}, "value"),
-                RMS =       State({'sourceType':ids.IMPACT, 'parameter':ids.RMS, "index": ALL}, "value"),
+#                PEAK =      State({'sourceType':ids.IMPACT, 'parameter':ids.PEAK, "index": ALL}, "value"),
+#                RMS =       State({'sourceType':ids.IMPACT, 'parameter':ids.RMS, "index": ALL}, "value"),
                 RANGE =     State({'sourceType':ids.IMPACT, 'parameter':ids.RANGE, "index": ALL}, "value"),
                 NPILES =    State({'sourceType':ids.IMPACT, 'parameter':ids.NPILES, "index": ALL}, "value"),
                 NSTRIKES =  State({'sourceType':ids.IMPACT, 'parameter':ids.NSTRIKES, "index": ALL}, "value"),
-                WF =        State({'sourceType':ids.IMPACT, 'parameter':ids.WF, "index": ALL}, "value")
+                WF =        State({'sourceType':ids.IMPACT, 'parameter':ids.WF, "index": ALL}, "value"),
+                F =         State({'sourceType':ids.IMPACT, 'parameter':ids.F, "index": ALL}, "value"),
             ),
             DTH = dict(
                 SEL =       State({'sourceType':ids.DTH, 'parameter':ids.SEL, "index": ALL}, "value"),
-                PEAK =      State({'sourceType':ids.DTH, 'parameter':ids.PEAK, "index": ALL}, "value"),
-                RMS =       State({'sourceType':ids.DTH, 'parameter':ids.RMS, "index": ALL}, "value"),
+#                PEAK =      State({'sourceType':ids.DTH, 'parameter':ids.PEAK, "index": ALL}, "value"),
+#                RMS =       State({'sourceType':ids.DTH, 'parameter':ids.RMS, "index": ALL}, "value"),
                 RANGE =     State({'sourceType':ids.DTH, 'parameter':ids.RANGE, "index": ALL}, "value"),
                 NPILES =    State({'sourceType':ids.DTH, 'parameter':ids.NPILES, "index": ALL}, "value"),
                 RATE =      State({'sourceType':ids.DTH, 'parameter':ids.RATE, "index": ALL}, "value"),
                 TIME =      State({'sourceType':ids.DTH, 'parameter':ids.TIME, "index": ALL}, "value"),
-                WF =        State({'sourceType':ids.DTH, 'parameter':ids.WF, "index": ALL}, "value")
+                WF =        State({'sourceType':ids.DTH, 'parameter':ids.WF, "index": ALL}, "value"),
+                F =         State({'sourceType':ids.DTH, 'parameter':ids.F, "index": ALL}, "value"),
             ),
 
             vibratory= dict(
@@ -67,21 +69,22 @@ def render(app: Dash) -> html.Div:
                 RANGE =     State({'sourceType':ids.VIBRATORY, 'parameter':ids.RANGE, "index": ALL}, "value"),
                 NPILES =    State({'sourceType':ids.VIBRATORY, 'parameter':ids.NPILES, "index": ALL}, "value"),
                 TIME =      State({'sourceType':ids.VIBRATORY, 'parameter':ids.TIME, "index": ALL}, "value"),
-                WF =        State({'sourceType':ids.VIBRATORY, 'parameter':ids.WF, "index": ALL}, "value")
+                WF =        State({'sourceType':ids.VIBRATORY, 'parameter':ids.WF, "index": ALL}, "value"),
+                F =         State({'sourceType':ids.VIBRATORY, 'parameter':ids.F, "index": ALL}, "value"),
                 ),
             #WF = State(ids.WF_INPUT, "value"),
-            F  = State(ids.F_INPUT, "value")
+            #F  = State(ids.F_INPUT, "value")
                 
                 
             )   
     )
-    def calc_results(n,impact,DTH,vibratory,F):
+    def calc_results(n,impact,DTH,vibratory):
         if n is None:
             return [html.Div()]
         else:
             print('button clicked')
             try:
-                inDiv = processInputs(impact, DTH, vibratory,F)
+                inDiv = processInputs(impact, DTH, vibratory)
                 
             except:
                 inDiv = html.Div('error processing inputs')
