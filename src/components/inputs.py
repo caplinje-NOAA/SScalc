@@ -17,26 +17,55 @@ def titleDiv(title,i):
                 dbc.Row(
                     [
                      dbc.Col(html.H4(title)),
-                     dbc.Col(html.Div(dbc.Button(id={"type": ids.HIDDEN_SOURCE_BUTTON, "index": i},disabled=True),style={'display':'none'})),
-                     dbc.Col(html.Div(id={"type": ids.SELRES, "index": i}))
+
                      ]
                     )
                 )
 
-        
+
+
+
+def tabContent(index:int,Type:str):
+    title = f'User Inputs for Source {index}: {Type}'
+    wfDict= ids.WF_INPUT
+    FDict = ids.F_INPUT
+    
+    if Type=='Impact':
+        mainInputs = ig.inputGroupList(title,ids.impactInputDict,index=index)
+        wfDict['sourceType']=ids.IMPACT
+        wfDict['value'] = 2.0
+        FDict['sourceType']=ids.IMPACT
+    if Type=='DTH':
+        mainInputs = ig.inputGroupList(title,ids.DTH_InputDict,index=index)
+        wfDict['sourceType']=ids.DTH
+        wfDict['value'] = 2.0
+        FDict['sourceType']=ids.DTH
+    if Type=='Vibratory':
+        mainInputs = ig.inputGroupList(title,ids.vibratoryInputDict,index=index)
+        wfDict['sourceType']=ids.VIBRATORY
+        wfDict['value'] = 2.5
+        FDict['sourceType']=ids.VIBRATORY
+    
+    defaultDict=[wfDict]
+    defaultInputs = ig.inputGroupList('Recommended Defaults', defaultDict,index=index)
+    return html.Div(
+                dbc.Row(
+                    [
+                     dbc.Col(mainInputs),
+                     
+                     dbc.Col(defaultInputs)
+                     ]
+                    )
+                )
+    
 
 def buildInputDiv(types)->html.Div:
-    cols = []
+    tabs = []
     for i,t in enumerate(types):
-        title = titleDiv(f'Source {i}: {t}',i)
-        if t=='Impact':
-            col = ig.inputGroupList(title,ids.impactInputDict,index=i,className='app-div')
-        if t=='DTH':
-            col = ig.inputGroupList(title,ids.DTH_InputDict,index=i,className='app-div')
-        if t=='Vibratory':
-            col = ig.inputGroupList(title,ids.vibratoryInputDict,index=i,className='app-div')
-        cols.append(dbc.Col(col))
-    return html.Div(dbc.Row(cols))
+   
+        contents = tabContent(i,t)
+        tabs.append(dbc.Tab(contents,label=f'Source {i}: {t}'))
+    return html.Div(dbc.Tabs(tabs))
 
 
 

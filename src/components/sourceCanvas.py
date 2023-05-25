@@ -12,7 +12,7 @@ card = dbc.Card(
 
         dbc.CardBody(
             [
-                html.H4("Current Configuration", className="card-title"),
+                html.H4("Source Configuration", className="card-title"),
                 html.Div('None.',id=ids.CONFIG_DISPLAY),    
                 dbc.Button("Configure Sources", id=ids.CONFIGURE_SOURCES_BUTTON, n_clicks=0,class_name='button'),
             ]
@@ -37,7 +37,7 @@ def render(app: Dash) -> html.Div:
     return html.Div(
         [
             card,
-            html.Hr(),
+            
             dbc.Offcanvas(html.Div([
                     html.P("Configure the number and type of sources here."),                
             

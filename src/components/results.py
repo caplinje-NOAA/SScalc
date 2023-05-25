@@ -11,14 +11,26 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 
 
+
+
 from . import ids, sourceConfigInput
 from ..calculator import multiSourceRange
 
+def resTables(res:multiSourceRange.results):
+    return dbc.Row([
+        dbc.Col( dbc.Table.from_dataframe(res.inputDF,striped=True,bordered=True,hover=True,index=True)),
+        dbc.Col( dbc.Table.from_dataframe(res.rangesDF,striped=True,bordered=True,hover=True,index=True))
+        ]
+        )
+    
 
 
-def processInputs(impact,DTH,vibratory,WF,F):
+
+def processInputs(impact,DTH,vibratory,F):
     # test for empty array
-    return f'total SELc = {multiSourceRange.calcRange(impact,DTH,vibratory,WF,F):.2f}'
+    res = multiSourceRange.calcRanges_MS(impact,DTH,vibratory,F)
+    
+    return resTables(res)
     
     
 
@@ -30,42 +42,45 @@ def render(app: Dash) -> html.Div:
             
             n=Input(ids.CALCULATE_BUTTON, "n_clicks"),
   
-            impact = [
-                State({"type": ids.IMPACT_INPUT_SEL['id'], "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_PEAK['id'], "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_RMS['id'], "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_RANGE['id'], "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_NPILES['id'], "index": ALL}, "value"),
-                State({"type": ids.IMPACT_INPUT_NSTRIKES['id'], "index": ALL}, "value")
-            ],
-            DTH = [
-                State({"type": ids.DTH_INPUT_SEL['id'], "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_PEAK['id'], "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_RMS['id'], "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_RANGE['id'], "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_NPILES['id'], "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_RATE['id'], "index": ALL}, "value"),
-                State({"type": ids.DTH_INPUT_TIME['id'], "index": ALL}, "value")
-            ],
+            impact = dict(
+                SEL =       State({'sourceType':ids.IMPACT, 'parameter':ids.SEL, "index": ALL}, "value"),
+                PEAK =      State({'sourceType':ids.IMPACT, 'parameter':ids.PEAK, "index": ALL}, "value"),
+                RMS =       State({'sourceType':ids.IMPACT, 'parameter':ids.RMS, "index": ALL}, "value"),
+                RANGE =     State({'sourceType':ids.IMPACT, 'parameter':ids.RANGE, "index": ALL}, "value"),
+                NPILES =    State({'sourceType':ids.IMPACT, 'parameter':ids.NPILES, "index": ALL}, "value"),
+                NSTRIKES =  State({'sourceType':ids.IMPACT, 'parameter':ids.NSTRIKES, "index": ALL}, "value"),
+                WF =        State({'sourceType':ids.IMPACT, 'parameter':ids.WF, "index": ALL}, "value")
+            ),
+            DTH = dict(
+                SEL =       State({'sourceType':ids.DTH, 'parameter':ids.SEL, "index": ALL}, "value"),
+                PEAK =      State({'sourceType':ids.DTH, 'parameter':ids.PEAK, "index": ALL}, "value"),
+                RMS =       State({'sourceType':ids.DTH, 'parameter':ids.RMS, "index": ALL}, "value"),
+                RANGE =     State({'sourceType':ids.DTH, 'parameter':ids.RANGE, "index": ALL}, "value"),
+                NPILES =    State({'sourceType':ids.DTH, 'parameter':ids.NPILES, "index": ALL}, "value"),
+                RATE =      State({'sourceType':ids.DTH, 'parameter':ids.RATE, "index": ALL}, "value"),
+                TIME =      State({'sourceType':ids.DTH, 'parameter':ids.TIME, "index": ALL}, "value"),
+                WF =        State({'sourceType':ids.DTH, 'parameter':ids.WF, "index": ALL}, "value")
+            ),
 
-            vibratory= [
-                State({"type": ids.VIBRATORY_INPUT_RMS['id'], "index": ALL}, "value"),
-                State({"type": ids.VIBRATORY_INPUT_RANGE['id'], "index": ALL}, "value"),
-                State({"type": ids.VIBRATORY_INPUT_NPILES['id'], "index": ALL}, "value"),
-                State({"type": ids.VIBRATORY_INPUT_TIME['id'], "index": ALL}, "value")
-                ],
-            WF = State(ids.WF_INPUT, "value"),
+            vibratory= dict(
+                RMS =       State({'sourceType':ids.VIBRATORY, 'parameter':ids.RMS, "index": ALL}, "value"),
+                RANGE =     State({'sourceType':ids.VIBRATORY, 'parameter':ids.RANGE, "index": ALL}, "value"),
+                NPILES =    State({'sourceType':ids.VIBRATORY, 'parameter':ids.NPILES, "index": ALL}, "value"),
+                TIME =      State({'sourceType':ids.VIBRATORY, 'parameter':ids.TIME, "index": ALL}, "value"),
+                WF =        State({'sourceType':ids.VIBRATORY, 'parameter':ids.WF, "index": ALL}, "value")
+                ),
+            #WF = State(ids.WF_INPUT, "value"),
             F  = State(ids.F_INPUT, "value")
                 
                 
             )   
     )
-    def calc_results(n,impact,DTH,vibratory,WF,F):
+    def calc_results(n,impact,DTH,vibratory,F):
         if n is None:
             return [html.Div()]
         else:
-            
-            return [html.Div(processInputs(impact, DTH, vibratory,WF,F))]
+            print('button clicked')
+            return [html.Div(processInputs(impact, DTH, vibratory,F))]
 
     return html.Div(
         [

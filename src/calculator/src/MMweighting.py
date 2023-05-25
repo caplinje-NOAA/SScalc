@@ -76,6 +76,7 @@ def genWFsimple(f=2e3):
                 out.w[i]=wf.w[0]
     return out
         
+
     
 
 def broadbandLevel(Ldecidecade):

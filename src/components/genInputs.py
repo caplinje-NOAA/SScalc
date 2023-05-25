@@ -21,4 +21,4 @@ TL_dict = {'name':"TL coef.",'id':ids.F_INPUT,'unit':'dB','value':15.0}
 def render(app: Dash) -> html.Div:
    
 
-    return ig.inputGroupList('General Inputs', [wf_dict,TL_dict])
+    return ig.inputGroupList('General Inputs', [TL_dict])
