@@ -60,6 +60,7 @@ def render(app: Dash) -> html.Div:
         Output(ids.CONFIG_DISPLAY,"children"),
         Output(ids.CANVAS_ALERT,"children"),
         Output(ids.INPUTS_DIV,"children"),
+        Output(ids.RESULTS_DIV,"children",allow_duplicate=True),
         Input(ids.SAVE_CONIG_BUTTON, "n_clicks"),
         [State({"type": ids.SOURCE_TYPES, "index": ALL}, "value"),
          State(ids.N_SOURCES_INPUT,"value"),
@@ -77,7 +78,7 @@ def render(app: Dash) -> html.Div:
                 outstr = outstr+f'{s}, '
             outstr=outstr[:-2]+')'
             
-            return html.Div(outstr), html.Div(saveAlert), inputs.buildInputDiv(sourceTypes)
+            return html.Div(outstr), html.Div(saveAlert), inputs.buildInputDiv(sourceTypes), html.Div()
         
      
         

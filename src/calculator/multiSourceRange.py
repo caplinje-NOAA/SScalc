@@ -53,39 +53,51 @@ def calcRanges_MS(impact,dth,vibratory,weightingFrequencies=None,Peak=False,Beha
         # calculate PTS isopleths
         PTSranges_SEL = np.round(calcRange(combinedSource.LE,PTS_thresholds_SEL,F=F,mRange=combinedSource.measurementRange),decimals=2)
    
-        data = np.array([PTS_thresholds_SEL,PTSranges_SEL])
-        indexTitles = ['Level A (SEL) Threshold', 'PTS (SEL) Isopleth (m)']
-        if Peak:
-            PTS_thresholds_PEAK = PTS_impulsive.Lpeak
-            PTSranges_PEAK = np.round(calcRange(combinedSource.Lpeak,PTS_thresholds_PEAK,F=F,mRange=combinedSource.measurementRange),decimals=2)
-            data.append(PTS_thresholds_PEAK,PTSranges_PEAK)
-            indexTitles.append('Level A (Peak) Threshold')
-            indexTitles.append('PTS (Peak) Isopleth (m)')
-        if Behavioral:    
-            BehavioralThreshold = np.ones_like(PTSranges_SEL)*Behavioral.Lrms_continuous
-            BehavioralRange = np.round(calcRange(combinedSource.Lrms,BehavioralThreshold,F=F,mRange=combinedSource.measurementRange),decimals=2)
-            data.append(BehavioralThreshold,BehavioralRange)
-            indexTitles.append('Level B Threshold')
-            indexTitles.append('Behavioral Range (m)')
+        data = [PTS_thresholds_SEL,PTSranges_SEL]
+      
+        # if Peak:
+        #     PTS_thresholds_PEAK = PTS_impulsive.Lpeak
+        #     PTSranges_PEAK = np.round(calcRange(combinedSource.Lpeak,PTS_thresholds_PEAK,F=F,mRange=combinedSource.measurementRange),decimals=2)
+        #     data.append(PTS_thresholds_PEAK,PTSranges_PEAK)
+        #     indexTitles.append('Level A (Peak) Threshold')
+        #     indexTitles.append('PTS (Peak) Isopleth (m)')
+        # if Behavioral:    
+        #     BehavioralThreshold = np.ones_like(PTSranges_SEL)*Behavioral.Lrms_continuous
+        #     BehavioralRange = np.round(calcRange(combinedSource.Lrms,BehavioralThreshold,F=F,mRange=combinedSource.measurementRange),decimals=2)
+        #     data.append(BehavioralThreshold,BehavioralRange)
+        #     indexTitles.append('Level B Threshold')
+        #     indexTitles.append('Behavioral Range (m)')
        
-        rangesDF = pd.DataFrame(data,columns=combinedSource.hg,index=indexTitles)
+
         
     else:
         thresholdType = 'non-impulsive'
         PTSthresholds = PTS_non_impulsive.LE
-        PTSranges = calcRange(combinedSource.LE,PTSthresholds,F=F,mRange=combinedSource.measurementRange)
+        PTSranges = np.round(calcRange(combinedSource.LE,PTSthresholds,F=F,mRange=combinedSource.measurementRange),decimals=2)
         
         data = np.array([PTSthresholds,PTSranges])
-        indexTitles = ['Level A (SEL) Threshold', 'PTS Isopleth (m)']
-        if Behavioral:
-            BehavioralThreshold = np.ones_like(PTSranges)*Behavioral.Lrms_continuous
-            BehavioralRange = calcRange(combinedSource.Lrms,BehavioralThreshold,F=F,mRange=combinedSource.measurementRange)
-            data.append(BehavioralThreshold, BehavioralRange)
-            indexTitles.append('Level B Threshold')
-            indexTitles.append('Behavioral Range (m)')
+
+        # if Behavioral:
+        #     BehavioralThreshold = np.ones_like(PTSranges)*Behavioral.Lrms_continuous
+        #     BehavioralRange = calcRange(combinedSource.Lrms,BehavioralThreshold,F=F,mRange=combinedSource.measurementRange)
+        #     data.append(BehavioralThreshold, BehavioralRange)
+        #     indexTitles.append('Level B Threshold')
+        #     indexTitles.append('Behavioral Range (m)')
     
-        rangesDF = pd.DataFrame(data,columns=combinedSource.hg,index=indexTitles)
-    
+    PTSranges_impulsiveOnly = np.round(calcRange(combinedSource.LE_impulsiveOnly,PTS_impulsive.LE,F=combinedSource.TL_impulsive,mRange=combinedSource.measurementRange) ,decimals=2)
+    PTSranges_nonImpulsiveOnly = np.round(calcRange(combinedSource.LE_nonImpulsiveOnly,PTS_non_impulsive.LE,F=combinedSource.TL_nonImpulsive,mRange=combinedSource.measurementRange),decimals=2) 
+    indexTitles = ['Level A (SEL, combined) Threshold',
+                   'PTS Isopleth (m, combined)',
+                   'Level A (SEL, impulsive) Threshold',
+                   'PTS Isopleth (m, impulsive only)',
+                   'Level A (SEL, non-impulsive) Threshold',
+                   'PTS Isopleth (m, non-impulsive only)',                       
+                   ]
+    data.append(PTS_impulsive.LE)
+    data.append(PTSranges_impulsiveOnly)
+    data.append(PTS_non_impulsive.LE)
+    data.append(PTSranges_nonImpulsiveOnly)
+    rangesDF = pd.DataFrame(np.array(data),columns=combinedSource.hg,index=indexTitles)
     rangesDF.index.name='Hearing Group'
     return results(rangesDF,combinedSource.sourcesDF)
 

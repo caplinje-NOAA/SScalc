@@ -124,14 +124,29 @@ class vibratorySource(constructionSource):
 @dataclass(frozen=True)
 class combinedSource:
     LE:np.ndarray
+    LE_impulsiveOnly:np.ndarray
+    LE_nonImpulsiveOnly:np.ndarray
     Lpeak:float
     Lrms:float
     TL:float
+    TL_impulsive:float
+    TL_nonImpulsive:float
     measurementRange:float
     isImpulsive:bool 
     sourcesDF:pd.DataFrame
     hg:[str]
     
+def addSourcesAlongHG(LE_all:np.ndarray,hgs:[str])->np.ndarray:
+    """Adds weighted source levels for each hearing group for an arbitrary number of source.
+    LE_all is expected to be a 2D np.ndarray with shape (i, len(hgs)) where i is the number of sources and
+    len(hgs) is the number of hearing groups (typically 5). Source levels are added geometrically (in linear values)"""
+    LE_sum = np.zeros(len(hgs),)
+    # add SEL levels in each hearing group
+    for i,LEhg in enumerate(LE_all.T):
+        LE_sum[i] =addSources(LEhg)
+        
+    return LE_sum
+
     
 def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Behavioral=False)->combinedSource:
     """A function which combines impact, vibratory, and DTH sources using input dictionaries
@@ -196,8 +211,36 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Beha
     print(f'sources={sources}')
     # matrix of weighted levels
     LEw_all = np.array([source.LEw for source in sources])
+    # get levels for all impulsive sources
     TL_all = np.array([source.TL for source in sources])
-    TL = np.max(TL_all)
+    TL = np.min(TL_all)    
+
+    # overall impulsive nature, if any is impulsive assume impulsive
+    isImpulsive = any([source.isImpulsive for source in sources])
+    
+
+
+    # get weighted levels for all non-impulsive sources
+    LEw_allNonImpulsive = []
+    LEw_allImpulsive = []
+    TL_allImpulsive = []  
+    TL_allNonImpulsive = []
+
+    
+    # get implusive only and non-impulsive only values
+    for source in sources:
+        if source.isImpulsive:
+            LEw_allImpulsive.append(source.LEw)
+            TL_allImpulsive.append(source.TL)
+            
+        else:
+            LEw_allNonImpulsive.append(source.LEw)
+            TL_allNonImpulsive.append(source.TL)
+            
+  
+    TL_nonImpulsive = np.min(np.array(TL_allNonImpulsive))
+    TL_impulsive = np.min(np.array(TL_allImpulsive))
+    
     # overall impulsive nature, if any is impulsive assume impulsive
     isImpulsive = any([source.isImpulsive for source in sources])
 
@@ -222,10 +265,11 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Beha
         raise ValueError('non uniform measurement ranges not yet implemented!')
     else:
         measurementRange = np.unique(ranges_all)[0]
-    LEw = np.zeros(len(WA.hg),)
+
     # add SEL levels in each hearing group
-    for i,LEhg in enumerate(LEw_all.T):
-        LEw[i] =addSources(LEhg)
+    LEw = addSourcesAlongHG(LEw_all, WA.hg)
+    LEw_impulsive = addSourcesAlongHG(np.array(LEw_allImpulsive), WA.hg)
+    LEw_non_impulsive = addSourcesAlongHG(np.array(LEw_allNonImpulsive), WA.hg)
     
         
 
@@ -242,7 +286,18 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Beha
         df['RMS'] = np.round(np.append(Lrms_all,Lrms),decimals=2)
     df.index.set_names('Sources',inplace=True)
     print(sources)
-    return combinedSource(LE=LEw,Lpeak=Lpeak,Lrms=Lrms,measurementRange=measurementRange,isImpulsive=isImpulsive,sourcesDF=df,hg=WA.hg,TL=TL)
+    return combinedSource(LE=LEw,
+                          LE_impulsiveOnly = LEw_impulsive,
+                          LE_nonImpulsiveOnly= LEw_non_impulsive,
+                          Lpeak=Lpeak,
+                          Lrms=Lrms,
+                          measurementRange=measurementRange,
+                          isImpulsive=isImpulsive,
+                          sourcesDF=df,
+                          hg=WA.hg,
+                          TL=TL,
+                          TL_impulsive=TL_impulsive,
+                          TL_nonImpulsive=TL_nonImpulsive)
                          
         
             

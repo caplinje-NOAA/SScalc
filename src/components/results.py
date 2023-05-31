@@ -37,7 +37,7 @@ def processInputs(impact,DTH,vibratory):
 def render(app: Dash) -> html.Div:
    
     @app.callback(
-        output = [Output(ids.RESULTS_DIV, "children")],
+        output = [Output(ids.RESULTS_DIV, "children",allow_duplicate=True)],
         inputs = dict(
             
             n=Input(ids.CALCULATE_BUTTON, "n_clicks"),
