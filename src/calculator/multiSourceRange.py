@@ -75,7 +75,7 @@ def calcRanges_MS(impact,dth,vibratory,weightingFrequencies=None,Peak=False,Beha
         PTSthresholds = PTS_non_impulsive.LE
         PTSranges = np.round(calcRange(combinedSource.LE,PTSthresholds,F=F,mRange=combinedSource.measurementRange),decimals=2)
         
-        data = np.array([PTSthresholds,PTSranges])
+        data = [PTSthresholds,PTSranges]
 
         # if Behavioral:
         #     BehavioralThreshold = np.ones_like(PTSranges)*Behavioral.Lrms_continuous
@@ -84,8 +84,14 @@ def calcRanges_MS(impact,dth,vibratory,weightingFrequencies=None,Peak=False,Beha
         #     indexTitles.append('Level B Threshold')
         #     indexTitles.append('Behavioral Range (m)')
     
-    PTSranges_impulsiveOnly = np.round(calcRange(combinedSource.LE_impulsiveOnly,PTS_impulsive.LE,F=combinedSource.TL_impulsive,mRange=combinedSource.measurementRange) ,decimals=2)
-    PTSranges_nonImpulsiveOnly = np.round(calcRange(combinedSource.LE_nonImpulsiveOnly,PTS_non_impulsive.LE,F=combinedSource.TL_nonImpulsive,mRange=combinedSource.measurementRange),decimals=2) 
+    if combinedSource.TL_impulsive:
+        PTSranges_impulsiveOnly = np.round(calcRange(combinedSource.LE_impulsiveOnly,PTS_impulsive.LE,F=combinedSource.TL_impulsive,mRange=combinedSource.measurementRange) ,decimals=2)
+    else:
+        PTSranges_impulsiveOnly = np.zeros_like(PTS_impulsive.LE)
+    if combinedSource.TL_nonImpulsive:
+        PTSranges_nonImpulsiveOnly = np.round(calcRange(combinedSource.LE_nonImpulsiveOnly,PTS_non_impulsive.LE,F=combinedSource.TL_nonImpulsive,mRange=combinedSource.measurementRange),decimals=2)
+    else:
+        PTSranges_nonImpulsiveOnly = np.zeros_like(PTS_impulsive.LE)
     indexTitles = ['Level A (SEL, combined) Threshold',
                    'PTS Isopleth (m, combined)',
                    'Level A (SEL, impulsive) Threshold',

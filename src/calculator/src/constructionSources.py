@@ -14,6 +14,8 @@ from enum import Enum, auto
 from .MMweighting import genWFsimple, WA
 
 
+# Is this really the best way to do this? 
+
 def roundf(vals,decimals=2):
     out = []
     for val in vals:
@@ -226,20 +228,28 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Beha
     TL_allImpulsive = []  
     TL_allNonImpulsive = []
 
-    
+    nonImpulsiveExists=False
+    impulsiveExists=False
     # get implusive only and non-impulsive only values
     for source in sources:
         if source.isImpulsive:
             LEw_allImpulsive.append(source.LEw)
             TL_allImpulsive.append(source.TL)
+            impulsiveExists=True
             
         else:
             LEw_allNonImpulsive.append(source.LEw)
             TL_allNonImpulsive.append(source.TL)
+            nonImpulsiveExists=True
             
-  
-    TL_nonImpulsive = np.min(np.array(TL_allNonImpulsive))
-    TL_impulsive = np.min(np.array(TL_allImpulsive))
+    if nonImpulsiveExists:
+        TL_nonImpulsive = np.min(np.array(TL_allNonImpulsive))
+    else:
+        TL_nonImpulsive = None
+    if impulsiveExists:
+        TL_impulsive = np.min(np.array(TL_allImpulsive))
+    else:
+        TL_impulsive = None
     
     # overall impulsive nature, if any is impulsive assume impulsive
     isImpulsive = any([source.isImpulsive for source in sources])
