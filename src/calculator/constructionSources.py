@@ -14,6 +14,7 @@ from enum import Enum, auto
 from .MMweighting import genWFsimple, WA
 
 
+
 # Is this really the best way to do this? 
 
 def roundf(vals,decimals=2):
@@ -69,6 +70,7 @@ class constructionSource:
     LE_cumulative: float = field(init=False)
     LEw: np.ndarray = field(init=False)
     weightingFunction: genWFsimple=genWFsimple
+    
     def accumulateSEL(self)->None:
         """Calculate the cumulative SEL for the entire activity"""
       
@@ -87,11 +89,9 @@ class constructionSource:
 @dataclass 
 class impactSource(constructionSource):
     """Impact specific construction source"""
-    
 
     isImpulsive:bool = True
     sourceType:constructionTypes =  constructionTypes.impact
-    weightingFrequency_Hz:float = 2.0e3
     
     def accumulateSEL(self):
         N = self.numberOfPiles*self.strikesPerPile
@@ -100,10 +100,8 @@ class impactSource(constructionSource):
 @dataclass  
 class DTHSource(constructionSource):
     
-
     isImpulsive:bool = True
     sourceType: constructionTypes = constructionTypes.DTH
-    weightingFrequency_Hz:float = 2.0e3
     
     def accumulateSEL(self):
         T_s = self.timePerPile_min*self.numberOfPiles*60
@@ -113,11 +111,9 @@ class DTHSource(constructionSource):
 @dataclass 
 class vibratorySource(constructionSource):
     
-
     isImpulsive:bool = False
     sourceType: constructionTypes = constructionTypes.vibratory
-    weightingFrequency_Hz:float = 2.5e3
-    
+  
     def accumulateSEL(self):
         T_m = self.timePerPile_min*self.numberOfPiles
         self.LE_cumulative = calcSELcont(self.Lrms,T_m)
@@ -222,7 +218,7 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Beha
     
 
 
-    # get weighted levels for all non-impulsive sources
+ 
     LEw_allNonImpulsive = []
     LEw_allImpulsive = []
     TL_allImpulsive = []  
@@ -295,7 +291,7 @@ def combineSources(impact:[dict], vibratory:[dict], DTH:[dict], Peak=False, Beha
     if Behavioral:
         df['RMS'] = np.round(np.append(Lrms_all,Lrms),decimals=2)
     df.index.set_names('Sources',inplace=True)
-    print(sources)
+
     return combinedSource(LE=LEw,
                           LE_impulsiveOnly = LEw_impulsive,
                           LE_nonImpulsiveOnly= LEw_non_impulsive,

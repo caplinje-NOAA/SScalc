@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output
 from . import ids, sourceConfigInput
 
 
+# coniguration card to open canvas and display current configuration
 card = dbc.Card(
     [
 
@@ -24,6 +25,7 @@ card = dbc.Card(
 
 def render(app: Dash) -> html.Div:
    
+    # main callback which opens the canvas
     @app.callback(
         Output(ids.CONFIGURE_SOURCES_CANVAS, "is_open"),
         Input(ids.CONFIGURE_SOURCES_BUTTON, "n_clicks"),

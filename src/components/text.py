@@ -8,3 +8,6 @@ Created on Thu May 18 09:59:53 2023
 
 SELunits = 'dB (rel 1 uPa^{2}s)'
 Lunits = 'dB (rel 1 uPa)'
+inCanvas_numberOfSourcesSelector = "Enter the total number of sources"
+saveAlert = 'Configuration Saved.'
+saveButton = 'Save Configuration'

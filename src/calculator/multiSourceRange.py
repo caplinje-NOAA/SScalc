@@ -5,13 +5,13 @@ Created on Sat May 13 15:06:28 2023
 @author: jim
 """
 
-from .data.NMFS_thresholds import PTS_impulsive, Behavioral, PTS_non_impulsive
-from .data import pileDrivingDefaults
-
-from .src.constructionSources import combineSources
 import pandas as pd
 import numpy as np
 from dataclasses import dataclass
+
+from .data.NMFS_thresholds import PTS_impulsive, Behavioral, PTS_non_impulsive
+from .constructionSources import combineSources
+
 
 def calcRange(SL,thresh,F:float=15.0,mRange:float=1.0):
     """Calculates the range to a given threshold, given a source level (which can be defined at any measured range, mRange, which defaults at 1 meter)

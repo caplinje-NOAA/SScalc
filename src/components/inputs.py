@@ -11,6 +11,7 @@ import dash_bootstrap_components as dbc
 
 from . import ids
 from .custom import inputGroups as ig
+from ..calculator.data import pileDrivingDefaults
 
 def titleDiv(title,i):
     return html.Div(
@@ -33,19 +34,21 @@ def tabContent(index:int,Type:str):
     if Type=='Impact':
         mainInputs = ig.inputGroupList(title,ids.impactInputDict,index=index)
         wfDict['sourceType']=ids.IMPACT
-        wfDict['value'] = 2.0
+        wfDict['value'] = pileDrivingDefaults.impact_Wfreq
         FDict['sourceType']=ids.IMPACT
+        
     if Type=='DTH':
         mainInputs = ig.inputGroupList(title,ids.DTH_InputDict,index=index)
         wfDict['sourceType']=ids.DTH
-        wfDict['value'] = 2.0
+        wfDict['value'] = pileDrivingDefaults.DTH_WFreq
         FDict['sourceType']=ids.DTH
+        
     if Type=='Vibratory':
         mainInputs = ig.inputGroupList(title,ids.vibratoryInputDict,index=index)
         wfDict['sourceType']=ids.VIBRATORY
-        wfDict['value'] = 2.5
+        wfDict['value'] = pileDrivingDefaults.vibratory_WFreq
         FDict['sourceType']=ids.VIBRATORY
-    
+  
     defaultDict=[wfDict,FDict]
     defaultInputs = ig.inputGroupList('Recommended Defaults', defaultDict,index=index)
     return html.Div(
